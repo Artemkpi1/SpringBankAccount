@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form th:method="POST" th:action="@{/postPayment}" th:object="${paymentAtt}">
+    <label for="number">Enter the Number of Card: </label>
+    <input type="text" th:field="*{receiver}" id="number"/>
+    <br>
+    <br>
+    <lable for="sender">Choose your Card</lable>
+    <input type="text" th:field="*{sender}" id="sender"/>
+    <br>
+    <br>
+    <label for="sum">Set quantity</label>
+    <input type="text" th:field="*{sum}" id="sum">
+    <br>
+    <br>
+    <input type="submit" value="PAY!">
+</form>
+</body>
+</html>
