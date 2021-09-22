@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>All Users</title>
+</head>
+<body>
+<div th:each="user : ${allUsers}">
+    <a th:text="${user.getFirstName()}">sdaasd</a>
+    <a th:text="${user.getLastName()}">sdaasd</a>
+    <a th:text="${user.getState()}">sdaasd</a>
+    <a th:text="${user.getEmail()}">sdaasd</a>
+
+    <form th:method="PATCH" th:action="@{/changeUserState/{id}(id=${user.getId()})}">
+        <input type="submit" value="BLOCK">
+    </form>
+
+
+</div>
+<form th:method="GET" th:action="@{/userPage}">
+    <input type="submit" value="BACK">
+</form>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:if="${payment.getState().name() == 'PREPARED'}"  th:each="payment : ${payments}">
+    <a th:text="${payment.getSender().getCardNumber()}" >sdaasd</a>
+    <a th:text="${payment.getReceiver().getCardNumber()}" >sdaasd</a>
+    <a th:text="${payment.getState()}">sdaasd</a>
+    <a th:text="${payment.getSum()}">sdaasd</a>
+
+    <form th:method="PATCH" th:action="@{/executePayment}" >
+        <input th:value="${payment.getId()}" id="paymentId" name="paymentId" hidden />
+        <input th:value="${payment.getSender().getCardNumber()}" id="senderCardNumber" name="senderCardNumber" hidden />
+        <input th:value="${payment.getReceiver().getCardNumber()}" name="receiverCardNumber" hidden />
+        <input th:value="${payment.getSum()}" name="sum" hidden />
+
+        <input type="submit" value="SENT">
+    </form>
+</div>
+
+<div th:if="${payment.getState().name() == 'SENT'}" th:each="payment : ${payments}">
+    <a th:text="${payment.getSender().getCardNumber()}" >sdaasd</a>
+    <a th:text="${payment.getReceiver().getCardNumber()}" >sdaasd</a>
+    <a th:text="${payment.getState()}">sdaasd</a>
+    <a th:text="${payment.getSum()}">sdaasd</a>
+</div>
+
+<form th:method="GET" th:action="@{/userPage}">
+    <input type="submit" value="BACK">
+</form>
+</body>
+</html>

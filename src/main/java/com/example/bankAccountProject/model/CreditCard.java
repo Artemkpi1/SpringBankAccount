@@ -7,6 +7,7 @@ import java.math.BigDecimal;
 
 @Entity
 @Table
+@EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -17,10 +18,19 @@ public class CreditCard {
     private Long id;
     private String cardName;
     private String cardNumber;
+
+    @Enumerated(EnumType.STRING)
     private Status status = Status.ACTIVE;
     private BigDecimal balance = new BigDecimal(1000);
     @ManyToOne
-    private Account owner;
+    private User owner;
+
+    private Request request;
+
+    public enum Request {
+        REQUESTED,
+        NOT_REQUESTED
+    }
 
 
     public enum Status {

@@ -15,5 +15,4 @@ public class PaymentDTO {
     private String receiver;
     private String sender;
     private BigDecimal sum;
-    private String creditCard;
 }

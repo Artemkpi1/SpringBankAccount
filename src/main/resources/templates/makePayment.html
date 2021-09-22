@@ -5,7 +5,7 @@
     <title>Title</title>
 </head>
 <body>
-<form th:method="POST" th:action="@{/postPayment}" th:object="${paymentAtt}">
+<form th:method="POST" th:action="@{/preparePayment}" th:object="${paymentAtt}">
     <label for="number">Enter the Number of Card: </label>
     <input type="text" th:field="*{receiver}" id="number"/>
     <br>

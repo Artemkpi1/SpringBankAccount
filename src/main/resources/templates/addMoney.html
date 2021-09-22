@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form th:method="PATCH" th:action="@{/addMoney}" th:object="${creditCardDTOAtt}">
+
+    <label for="quantity">Set quantity</label>
+    <input type="text" th:field="*{balance}" id="quantity">
+
+    <label for="cardNumber">Choose card</label>
+    <input type="text" th:field="*{cardNumber}" id="cardNumber">
+
+    <input type="submit" value="ADD MONEY">
+</form>
+</body>
+</html>

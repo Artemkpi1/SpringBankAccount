@@ -1,22 +1,57 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
-    <div th:each="card : ${cardInfo}">
+    <div sec:authorize="hasRole('USER')" th:each="card : ${cardInfo}">
         <a th:text="${card.getCardName()}">sdaasd</a>
         <a th:text="${card.getCardNumber()}">sdaasd</a>
         <a th:text="${card.getStatus()}">sdaasd</a>
         <a th:text="${card.getBalance()}">sdaasd</a>
-        <form th:method="PATCH" th:action="@{/changeStatus/{id}(id=${card.getId()})}">
 
+        <form th:if="${card.getStatus().name() == 'ACTIVE'}" th:method="PATCH" th:action="@{/changeCardStatus/{id}(id=${card.getId()})}">
             <input type="submit" value="BLOCK">
         </form>
+        <br>
+            <form th:if="${card.getStatus().name() == 'BLOCKED'}" th:method="POST" th:action="@{/postRequestCard/{id}(id=${card.getId()})}">
+            <input type="submit" value="REQUEST TO UNBLOCK">
+        </form>
+    </div>
+    <li sec:authorize="isAuthenticated()" class="nav-item">
+        <a class="nav-link" th:href="@{/logout}" th:text="#{logout}">Logout</a>
+    </li>
+
+    <div sec:authorize="hasRole('USER')">
+        <li class="nav-item">
+            <a href="/addMoney">Add Money?</a>
+        </li>
+
+        <li class="nav-item">
+            <a href="/makePayment/">Pay</a>
+        </li>
+
+        <li class="nav-item">
+            <a href="/addCardName">Add New Card?</a>
+        </li>
+
+        <li class="nav-item">
+            <a href="/allPayments">Payments</a>
+        </li>
+    </div>
+
+    <div sec:authorize="hasRole('ROLE_ADMIN')">
+
+        <li class="nav-item">
+            <a href="/allUsers">Users</a>
+        </li>
+
+        <li class="nav-item">
+            <a href="/allRequests">Requests</a>
+        </li>
 
     </div>
-    <a th:href="@{/makePayment/}">Pay</a>
-    <a href="/addCardName">Add New Card?</a>
+
 </body>
 </html>

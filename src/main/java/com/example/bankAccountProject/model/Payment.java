@@ -1,9 +1,6 @@
 package com.example.bankAccountProject.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -11,6 +8,7 @@ import java.util.Date;
 
 @Entity
 @Table
+@EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -26,7 +24,10 @@ public class Payment {
     private CreditCard receiver;
     private BigDecimal sum;
     private Date date;
+    @ManyToOne
+    private User owner;
 
+    @Enumerated(EnumType.STRING)
     private State state;
     public enum State {
         PREPARED,
