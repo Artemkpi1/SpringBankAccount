@@ -42,11 +42,12 @@ public class UserService implements UserDetailsService {
     }
 
     public void changeUserState(User user) {
-        if (user.getState() == User.State.ACTIVE) {
-            user.setState(User.State.BLOCKED);
-        } else {
+        if (user.getState() == User.State.BLOCKED) {
             user.setState(User.State.ACTIVE);
+        } else {
+            user.setState(User.State.BLOCKED);
         }
+        userRepository.save(user);
     }
 
     public List<User> showAllUsers(){
@@ -61,6 +62,7 @@ public class UserService implements UserDetailsService {
                 .lastName(userDTO.getLastName())
                 .password(bCryptPasswordEncoder.encode(userDTO.getPassword()))
                 .email(userDTO.getEmail())
+                .state(User.State.ACTIVE)
                 .role(Role.ROLE_USER)
                 .build();
 

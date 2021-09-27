@@ -1,15 +1,23 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <style th:replace="fragments/styling :: styling"></style>
+    <div th:insert="fragments/header :: imports"></div>
     <title>Title</title>
 </head>
 <body>
-<form th:method="POST" th:action="@{/userPage}" th:object="${cardNameAtt}">
-    <label for="name">Enter the Name of Card: </label>
-    <input type="text" th:field="*{cardName}" id="name"/>
+<div  th:replace="fragments/header :: header"></div>
+<div class="form-signin">
+    <form th:method="POST" th:action="@{/userPage}" th:object="${cardNameAtt}">
+        <label for="name">Enter the Name of Card: </label>
+        <input type="text" th:field="*{cardName}" id="name"/>
 
-    <input type="submit" value="Create!">
+        <input type="submit" value="Create!">
+    </form>
+    <form th:method="GET" th:action="@{/userPage}">
+        <input type="submit" value="BACK">
 </form>
+</div>
 </body>
 </html>

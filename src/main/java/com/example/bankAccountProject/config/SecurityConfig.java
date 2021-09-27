@@ -39,7 +39,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin()
                 .loginPage("/login")
                 .permitAll()
-                .defaultSuccessUrl("/userPage", true);
+                .defaultSuccessUrl("/userPage", true)
+                .failureUrl("/login?error");
     }
 
     @Bean

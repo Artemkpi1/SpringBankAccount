@@ -1,24 +1,33 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <style th:replace="fragments/styling :: styling"></style>
+    <div th:insert="fragments/header :: imports"></div>
     <title>Title</title>
 </head>
 <body>
+<div th:replace="fragments/header :: header"></div>
+<div class="form-signin">
 <form th:method="POST" th:action="@{/preparePayment}" th:object="${paymentAtt}">
-    <label for="number">Enter the Number of Card: </label>
-    <input type="text" th:field="*{receiver}" id="number"/>
-    <br>
-    <br>
-    <lable for="sender">Choose your Card</lable>
+
+    <lable for="sender">From:</lable>
     <input type="text" th:field="*{sender}" id="sender"/>
     <br>
     <br>
-    <label for="sum">Set quantity</label>
+    <label for="number">To:</label>
+    <input type="text" th:field="*{receiver}" id="number"/>
+    <br>
+    <br>
+    <label for="sum">Quantity:</label>
     <input type="text" th:field="*{sum}" id="sum">
     <br>
     <br>
     <input type="submit" value="PAY!">
 </form>
+<form th:method="GET" th:action="@{/userPage}">
+    <input type="submit" value="BACK">
+</form>
+</div>
 </body>
 </html>

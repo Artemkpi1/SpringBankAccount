@@ -2,9 +2,15 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
+    <style th:replace="fragments/styling :: styling"></style>
+    <div th:insert="fragments/header :: imports"></div>
+
     <title>Title</title>
 </head>
 <body>
+<div th:replace="fragments/header :: header"></div>
+<div class="form-signin">
+
     <div sec:authorize="hasRole('USER')" th:each="card : ${cardInfo}">
         <a th:text="${card.getCardName()}">sdaasd</a>
         <a th:text="${card.getCardNumber()}">sdaasd</a>
@@ -19,9 +25,7 @@
             <input type="submit" value="REQUEST TO UNBLOCK">
         </form>
     </div>
-    <li sec:authorize="isAuthenticated()" class="nav-item">
-        <a class="nav-link" th:href="@{/logout}" th:text="#{logout}">Logout</a>
-    </li>
+
 
     <div sec:authorize="hasRole('USER')">
         <li class="nav-item">
@@ -29,7 +33,7 @@
         </li>
 
         <li class="nav-item">
-            <a href="/makePayment/">Pay</a>
+            <a href="/makePayment">Pay</a>
         </li>
 
         <li class="nav-item">
@@ -52,6 +56,9 @@
         </li>
 
     </div>
-
+    <li sec:authorize="isAuthenticated()" class="nav-item">
+        <a class="nav-link" th:href="@{/logout}" th:text="#{logout}">Logout</a>
+    </li>
+</div>
 </body>
 </html>

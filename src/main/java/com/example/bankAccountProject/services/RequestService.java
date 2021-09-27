@@ -29,10 +29,8 @@ public class RequestService {
 
 
     public void requestToUnblock(CreditCard creditCard) {
-        if (creditCard.getRequest() == CreditCard.Request.REQUESTED) {
-            return;
-        }
-        creditCard.setRequest(CreditCard.Request.REQUESTED);
+
+        creditCard.setBeenRequested(true);
         CardRequest cardRequest = new CardRequest();
         cardRequest.setCreditCard(creditCard);
         requestRepository.save(cardRequest);

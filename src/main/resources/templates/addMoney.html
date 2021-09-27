@@ -2,9 +2,14 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
+    <style th:replace="fragments/styling :: styling"></style>
+    <div th:insert="fragments/header :: imports"></div>
+
     <title>Title</title>
 </head>
 <body>
+<div th:replace="fragments/header :: header"></div>
+<div class="form-signin">
 <form th:method="PATCH" th:action="@{/addMoney}" th:object="${creditCardDTOAtt}">
 
     <label for="quantity">Set quantity</label>
@@ -15,5 +20,9 @@
 
     <input type="submit" value="ADD MONEY">
 </form>
+<form th:method="GET" th:action="@{/userPage}">
+    <input type="submit" value="BACK">
+</form>
+</div>
 </body>
 </html>

@@ -2,9 +2,14 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <style th:replace="fragments/styling :: styling"></style>
+    <div th:insert="fragments/header :: imports"></div>
+
     <title>Title</title>
 </head>
 <body>
+<div th:replace="fragments/header :: header"></div>
+
 <div th:if="${payment.getState().name() == 'PREPARED'}"  th:each="payment : ${payments}">
     <a th:text="${payment.getSender().getCardNumber()}" >sdaasd</a>
     <a th:text="${payment.getReceiver().getCardNumber()}" >sdaasd</a>
@@ -21,11 +26,74 @@
     </form>
 </div>
 
-<div th:if="${payment.getState().name() == 'SENT'}" th:each="payment : ${payments}">
-    <a th:text="${payment.getSender().getCardNumber()}" >sdaasd</a>
-    <a th:text="${payment.getReceiver().getCardNumber()}" >sdaasd</a>
-    <a th:text="${payment.getState()}">sdaasd</a>
-    <a th:text="${payment.getSum()}">sdaasd</a>
+<div>
+<div class="container">
+    <table class="table table-bordered">
+        <tr>
+            <th>
+                <a th:text="#{payment.sender}" th:href="@{${#httpServletRequest.requestURI}
+                (page=${currentPage},
+                sortBy='sender',
+                direction=${reverseDirection})}">Sender</a>
+            </th>
+            <th>
+                <a th:text="#{payment.receiver}" th:href="@{${#httpServletRequest.requestURI}
+                (page=${currentPage},
+                sortBy='receiver',
+                direction=${reverseDirection})}">Receiver</a>
+            </th>
+            <th>
+                <a th:text="#{payment.status}" th:href="@{${#httpServletRequest.requestURI}
+                (page=${currentPage},
+                sortBy='state',
+                direction=${reverseDirection})}">Status</a>
+            </th>
+            <th>
+                <a th:text="#{payment.sum}" th:href="@{${#httpServletRequest.requestURI}
+                (page=${currentPage},
+                sortBy='sum',
+                direction=${reverseDirection})}">Sum</a>
+            </th>
+        </tr>
+
+        <tr th:if="${payment.getState().name() == 'SENT'}"  th:each="payment : ${payments}">
+
+            <td th:text="${payment.getSender().getCardNumber()}" >Sender Card</td>
+            <td th:text="${payment.getReceiver().getCardNumber()}"  >Receiver Card</td>
+            <td th:text="#{payment.status.sent}">Status</td>
+            <td th:text="${payment.getSum()}">Sum</td>
+
+        </tr>
+    </table>
+</div>
+
+
+
+
+<div th:fragment="pagination-bar" th:if="${totalPages > 1}">
+    <div class="row col-sm-10">
+        <div class="col-sm-2" th:text="#{total.rows} + ${totalItems}">
+        </div>
+        <div class="col-sm-1">
+                <span th:each="i : ${#numbers.sequence(1, totalPages)}">
+                    <a th:if="${currentPage != i}" th:href="@{${#httpServletRequest.requestURI}(page=${i},sortBy=${sortField},direction=${direction})}" th:text="${i}"></a>
+                    <span th:unless="${currentPage != i}" th:text="${i}">number</span>
+                </span>
+        </div>
+        <div class="col-sm-1">
+            <a th:if="${currentPage != 1}" th:href="@{${#httpServletRequest.requestURI}(page=1,sortBy=${sortField},direction=${direction})}" th:text="#{first}">First</a>
+        </div>
+        <div class="col-sm-1">
+            <a th:if="${currentPage != 1}" th:href="@{${#httpServletRequest.requestURI}(page=${currentPage - 1},sortBy=${sortField},direction=${direction})}" th:text="#{previous}">Previous</a>
+        </div>
+        <div class="col-sm-1">
+            <a th:if="${currentPage < totalPages}" th:href="@{${#httpServletRequest.requestURI}(page=${currentPage + 1},sortBy=${sortField},direction=${direction})}" th:text="#{next}">Next</a>
+        </div>
+        <div class="col-sm-1">
+            <a th:if="${currentPage < totalPages}" th:href="@{${#httpServletRequest.requestURI}(page=${totalPages},sortBy=${sortField},direction=${direction})}" th:text="#{last}">Last</a>
+        </div>
+    </div>
+</div>
 </div>
 
 <form th:method="GET" th:action="@{/userPage}">

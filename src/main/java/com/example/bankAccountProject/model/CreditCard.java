@@ -25,6 +25,7 @@ public class CreditCard {
     @ManyToOne
     private User owner;
 
+    private boolean beenRequested = false;
     private Request request;
 
     public enum Request {

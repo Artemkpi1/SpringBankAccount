@@ -1,18 +1,23 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <style th:replace="fragments/styling :: styling"></style>
+    <div th:insert="fragments/header :: imports"></div>
     <title>All Users</title>
 </head>
 <body>
-<div th:each="user : ${allUsers}">
+<div th:replace="fragments/header :: header"></div>
+<div class="form-signin">
+<div th:if="${user.getRole().name() == 'ROLE_USER'}"  th:each="user : ${allUsers}">
     <a th:text="${user.getFirstName()}">sdaasd</a>
     <a th:text="${user.getLastName()}">sdaasd</a>
     <a th:text="${user.getState()}">sdaasd</a>
     <a th:text="${user.getEmail()}">sdaasd</a>
 
-    <form th:method="PATCH" th:action="@{/changeUserState/{id}(id=${user.getId()})}">
-        <input type="submit" value="BLOCK">
+    <form th:method="PATCH" th:if="${user.getRole().name() == 'ROLE_USER'}" th:action="@{/changeUserState/{id}(id=${user.getId()})}">
+        <input th:if="${user.getState().name() == 'ACTIVE'}" type="submit" value="BLOCK">
+        <input th:if="${user.getState().name() == 'BLOCKED'}" type="submit" value="UNBLOCK">
     </form>
 
 
@@ -20,5 +25,6 @@
 <form th:method="GET" th:action="@{/userPage}">
     <input type="submit" value="BACK">
 </form>
+</div>
 </body>
 </html>

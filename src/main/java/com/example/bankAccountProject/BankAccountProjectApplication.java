@@ -20,25 +20,25 @@ public class BankAccountProjectApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(BankAccountProjectApplication.class, args);
 	}
-	@Bean
-	public CommandLineRunner runApplication(UserRepository userRepository) {
-		return (args -> {
-			BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-			Random random = new Random();
-
-			List<User> users = new ArrayList<>();
-
-			User user = User.builder()
-					.firstName("Igor")
-					.lastName("Mnyshenko")
-					.email("a")
-					.password(bCryptPasswordEncoder.encode("a"))
-					.role(Role.ROLE_ADMIN)
-					.build();
-
-			users.add(user);
-			userRepository.saveAll(users);
-
-		});
-	}
+//	@Bean
+//	public CommandLineRunner runApplication(UserRepository userRepository) {
+//		return (args -> {
+//			BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+//			Random random = new Random();
+//
+//			List<User> users = new ArrayList<>();
+//
+//			User user = User.builder()
+//					.firstName("Artem")
+//					.lastName("Zhuravskyi")
+//					.email("a")
+//					.password(bCryptPasswordEncoder.encode("a"))
+//					.role(Role.ROLE_ADMIN)
+//					.build();
+//
+//			users.add(user);
+//			userRepository.saveAll(users);
+//
+//		});
+//	}
 }

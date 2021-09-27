@@ -25,7 +25,8 @@ public class RegistrationController {
 
 
     @GetMapping("/registration")
-    public String showRegistrationPage(@ModelAttribute("user") UserDTO userDTO) {
+    public String showRegistrationPage(@ModelAttribute("user") UserDTO userDTO,
+                                       Model model) {
         return "registration";
     }
 

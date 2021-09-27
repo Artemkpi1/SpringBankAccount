@@ -8,6 +8,10 @@ import com.example.bankAccountProject.model.Payment;
 import com.example.bankAccountProject.model.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -23,6 +27,7 @@ public class PaymentService {
     @Autowired
     private CreditCardRepository creditCardRepository;
 
+    public final static int PAGE_SIZE = 10;
     public Optional<Payment> show(Long id) {
         return paymentRepository.findById(id);
     }
@@ -32,7 +37,8 @@ public class PaymentService {
 
         Optional<CreditCard> senderCard1 = creditCardRepository.findCreditCardByCardNumber(paymentDTO.getSender());
 
-        if (senderCard1.isEmpty()) {
+        if (senderCard1.isEmpty() || senderCard1.get()
+                .getStatus().equals(CreditCard.Status.BLOCKED)) {
             return;
         }
         if (senderCard1.get().getBalance().doubleValue()
@@ -73,7 +79,7 @@ public class PaymentService {
         return receiverCard1.orElse(null);
     }
 
-    public void executePayment(User user, String senderCard, String receiverCard, BigDecimal sum, Payment payment) {
+    public void addPayment(User user, String senderCard, String receiverCard, BigDecimal sum, Payment payment) {
         CreditCard senderCard1 = matchesUserWithSenderCard(user, senderCard);
         CreditCard receiverCard1 = isReceiverCardPresent(receiverCard);
         matchesUserWithSenderCard(user, senderCard).setBalance(senderCard1.getBalance().subtract(sum));
@@ -84,9 +90,21 @@ public class PaymentService {
         creditCardRepository.save(receiverCard1);
     }
 
+    public Page<Payment> getPaginated(int pageNo, String sortField, String sortDirection){
+        Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name()) ?
+                Sort.by(sortField).ascending() : Sort.by(sortField).descending();
 
+        Pageable pageable = PageRequest.of(pageNo - 1, PAGE_SIZE, sort);
+        return paymentRepository.findAll(pageable);
+    }
 
-
+//
+//    public Page<Payment> getSorting(String sortField, String sortDirection) {
+//        Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name()) ?
+//                Sort.by(sortField).ascending() : Sort.by(sortField).descending();
+//
+//        return orderRepository.findAll(pageable);
+//    }
 }
 
 

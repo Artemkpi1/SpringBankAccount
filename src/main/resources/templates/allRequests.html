@@ -2,10 +2,15 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <style th:replace="fragments/styling :: styling"></style>
+    <div th:insert="fragments/header :: imports"></div>
     <title>Title</title>
 </head>
 <body>
-<div th:each="request : ${allRequests}">
+<div th:replace="fragments/header :: header"></div>
+
+<div class="form-signin">
+    <div th:each="request : ${allRequests}">
     <a th:text="${request.getCreditCard().getId()}">sdaasd</a>
     <a th:text="${request.getCreditCard().getCardName()}">sdaasd</a>
     <a th:text="${request.getCreditCard().getCardNumber()}">sdaasd</a>
@@ -16,8 +21,10 @@
     </form>
 
 </div>
+
 <form th:method="GET" th:action="@{/userPage}">
     <input type="submit" value="BACK">
 </form>
+</div>
 </body>
 </html>
