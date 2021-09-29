@@ -29,6 +29,8 @@
         <label for="email"></label>
         <input th:placeholder="#{email}" class="form-control" type="email" th:field="*{email}" id="email" required autofocus>
         <span style="color: red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+        <span style="color: red" th:if="${not exception.isEmpty()}" th:text="#{email.exists}">TEXT</span>
+
         <br/>
 
         <p th:text="#{input.password}">Input password</p>

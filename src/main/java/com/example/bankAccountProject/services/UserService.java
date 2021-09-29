@@ -19,6 +19,7 @@ import com.example.bankAccountProject.messages.Messages.*;
 import java.util.List;
 import java.util.Optional;
 
+import static com.example.bankAccountProject.messages.Messages.USER_ALREADY_EXISTS_MSG;
 import static com.example.bankAccountProject.messages.Messages.USER_NOT_FOUND_MSG;
 
 @Service
@@ -56,6 +57,12 @@ public class UserService implements UserDetailsService {
 
     public void register(UserDTO userDTO) throws UserException {
 
+        if (userRepository.findUserByEmail(userDTO.getEmail())
+                .isPresent()) {
+            throw new UserException(
+                    String.format(USER_ALREADY_EXISTS_MSG, userDTO.getEmail())
+            );
+        }
 
         User newUser = User.builder()
                 .firstName(userDTO.getFirstName())

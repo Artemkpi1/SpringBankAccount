@@ -26,20 +26,32 @@ public class RegistrationController {
 
     @GetMapping("/registration")
     public String showRegistrationPage(@ModelAttribute("user") UserDTO userDTO,
-                                       Model model) {
+                                       Model model,
+                                       BindingResult bindingResult) {
+
+        model.addAttribute("exception", "");
+
         return "registration";
     }
 
     @PostMapping("/registration")
     public String registerUser(
             @ModelAttribute("user") @Valid UserDTO userDTO,
-            BindingResult bindingResult) throws UserException {
+            BindingResult bindingResult,
+            Model model) throws UserException {
 
+
+        model.addAttribute("exception", "");
 
         if (bindingResult.hasErrors()) {
             return "registration";
         }
-        userService.register(userDTO);
+        try {
+            userService.register(userDTO);
+        } catch (UserException e) {
+            model.addAttribute("exception", userDTO.getEmail());
+            return "registration";
+        }
 
         return "redirect:/login";
     }
